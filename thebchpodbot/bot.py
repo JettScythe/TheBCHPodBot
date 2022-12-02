@@ -7,6 +7,7 @@ from commands import *
 from messages import *
 config = dotenv_values(".env")
 
+
 updater = Updater(config["TG_API_KEY"],
                   use_context=True)
 
