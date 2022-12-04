@@ -1,23 +1,52 @@
 from pycoingecko import CoinGeckoAPI
 from typing import List, Optional, Union, Dict
 import json
+from babel.numbers import format_currency
 
 cg = CoinGeckoAPI()
 supported_currencies = cg.get_supported_vs_currencies()
+unsupported_to_format = [
+    "btc",
+    "eth",
+    "ltc",
+    "bch",
+    "bnb",
+    "eos",
+    "xrp",
+    "xlm",
+    "link",
+    "dot",
+    "yfi",
+    "bits",
+    "sats",
+    "xau",
+    "xdr",
+    "xag",
+]
+
 
 def get_fiat_value(currencies: Optional[Union[List[str], str]] = None) -> Dict:
     if not currencies:
-        currencies = 'usd'
-    price = cg.get_price('bitcoin-cash', currencies, include_market_cap=True, include_24hr_vol=True, include_24hr_change=True)
+        currencies = "usd"
+    price = cg.get_price(
+        "bitcoin-cash",
+        currencies,
+        include_market_cap=True,
+        include_24hr_vol=True,
+        include_24hr_change=True,
+    )
     price = price["bitcoin-cash"]
     for k, v in price.items():
         currency = k.split("_")[0]
         if k.endswith("change"):
-            v /= 100.
-            price[k] = "{:.2%}".format(v)
-    """
-    # This works for most fiat, but not crypto pairs
-        if k.endswith("vol") or k.endswith("cap"):
-            price[k] = format_currency(v, currency.upper()) """
-    price = json.dumps(price, indent=2)
+            price[k] = format_percent(v)
+        if k.endswith("cap") or k.endswith("vol"):
+            if currency.lower() not in unsupported_to_format:
+                price[k] = format_currency(v, currency.upper(), "¤ #,##0.00")
+    price = json.dumps(price, indent=2, ensure_ascii=False)
     return price
+
+
+def format_percent(value) -> str:
+    value /= 100.0
+    return "{:.2%}".format(value)
