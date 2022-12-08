@@ -3,6 +3,8 @@ from telegram.ext.callbackcontext import CallbackContext
 from helpers.price import get_fiat_value, supported_currencies
 from telegram.parsemode import ParseMode
 import logging
+from bitcash.network import NetworkAPI
+
 
 
 
@@ -214,16 +216,28 @@ def hotdog(update: Update, context: CallbackContext):
     user = update.message.from_user
     logger.info("message from %s: %s", user.username, update.message.text)
     if len(context.args) >= 1:
-        currencies = []
-        for arg in context.args:
-            if arg.lower() in supported_currencies:
-                currencies.append(arg.lower())
-        price = get_fiat_value(currencies)
+        if context.args[0] == "all":
+            price = get_fiat_value(supported_currencies)
+        else:
+            currencies = []
+            for arg in context.args:
+                if arg.lower() in supported_currencies:
+                    currencies.append(arg.lower())
+            price = get_fiat_value(currencies)
     else:
         price = get_fiat_value()
-    response = "```\n{}\n```".format(price)
     if update.message is not None:
-        update.message.reply_markdown(response, quote=True)
+        if len(price) >= 4096:
+                if update.message.chat.type != "private":  # check if in DM
+                    return update.message.reply_html(
+                        text="Private message me to see price in all supported currencies",
+                    )
+                else:
+                    messages = [price[:len(price)//2], price[len(price)//2:]]
+                    for message in messages:
+                        update.message.reply_markdown("```\n{}\n```".format(message), quote=True)
+        else:
+            update.message.reply_markdown("```\n{}\n```".format(price), quote=True)
     else:
         pass
 
@@ -232,3 +246,12 @@ def ratio(update: Update, context: CallbackContext):
     logger.info("message from %s: %s", user.username, update.message.text)
     response = "```\n{}\n```".format(get_fiat_value("btc"))
     update.message.reply_markdown(response, quote=True)
+
+def broadcast_transaction(update: Update, context: CallbackContext):
+    user = update.message.from_user
+    logger.info("message from %s: %s", user.username, update.message.text)
+    txid = NetworkAPI.broadcast_tx(context.args[0])
+    if txid.status_code == 200:
+        update.message.reply_text("Broadcast Success! Txid[s]: {}".format(txid.text), quote=True)
+    else:
+        update.message.reply_text("Doesn't look like I could broadcast for you right now, confirm balances and try again", quote=True)

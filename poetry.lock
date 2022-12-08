@@ -39,6 +39,14 @@ importlib-metadata = {version = ">=0.23,<5", markers = "python_version == \"3.7\
 test = ["coverage", "flake8", "pexpect", "wheel"]
 
 [[package]]
+name = "asn1crypto"
+version = "1.5.1"
+description = "Fast ASN.1 parser and serializer with definitions for private keys, public keys, certificates, CRL, OCSP, CMS, PKCS#3, PKCS#7, PKCS#8, PKCS#12, PKCS#5, X.509 and TSP"
+category = "main"
+optional = false
+python-versions = "*"
+
+[[package]]
 name = "atomicwrites"
 version = "1.4.1"
 description = "Atomic file writes."
@@ -83,6 +91,22 @@ python-versions = ">=3.6"
 tzdata = ["tzdata"]
 
 [[package]]
+name = "bitcash"
+version = "0.6.7"
+description = "Bitcoin Cash made easier."
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+coincurve = ">=4.3.0"
+requests = "*"
+
+[package.extras]
+cache = ["lmdb"]
+cli = ["appdirs", "click", "privy", "tinydb"]
+
+[[package]]
 name = "black"
 version = "22.10.0"
 description = "The uncompromising code formatter."
@@ -122,6 +146,17 @@ optional = false
 python-versions = ">=3.6"
 
 [[package]]
+name = "cffi"
+version = "1.15.1"
+description = "Foreign Function Interface for Python calling C code."
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+pycparser = "*"
+
+[[package]]
 name = "cfgv"
 version = "3.3.1"
 description = "Validate configuration and produce human readable error messages."
@@ -151,6 +186,18 @@ python-versions = ">=3.7"
 [package.dependencies]
 colorama = {version = "*", markers = "platform_system == \"Windows\""}
 importlib-metadata = {version = "*", markers = "python_version < \"3.8\""}
+
+[[package]]
+name = "coincurve"
+version = "18.0.0"
+description = "Cross-platform Python CFFI bindings for libsecp256k1"
+category = "main"
+optional = false
+python-versions = ">=3.7"
+
+[package.dependencies]
+asn1crypto = "*"
+cffi = ">=1.3.0"
 
 [[package]]
 name = "colorama"
@@ -382,6 +429,14 @@ python-versions = "*"
 
 [package.dependencies]
 requests = "*"
+
+[[package]]
+name = "pycparser"
+version = "2.21"
+description = "C parser in Python"
+category = "main"
+optional = false
+python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
 
 [[package]]
 name = "pyparsing"
@@ -654,21 +709,25 @@ testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "flake8 (<5)", "pytest-co
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "1b636d8ad50d2530eb124d47a79e4e4d98fd1d04a05a4add07e9dbddb824600c"
+content-hash = "04b304de14340be7d0b41b8de390058b82a82559d414f9ad16f8e0fdfecce2dd"
 
 [metadata.files]
 apscheduler = []
 argcomplete = []
+asn1crypto = []
 atomicwrites = []
 attrs = []
 babel = []
 "backports.zoneinfo" = []
+bitcash = []
 black = []
 cachetools = []
 certifi = []
+cffi = []
 cfgv = []
 charset-normalizer = []
 click = []
+coincurve = []
 colorama = []
 commitizen = []
 decli = []
@@ -690,6 +749,7 @@ pre-commit = []
 prompt-toolkit = []
 py = []
 pycoingecko = []
+pycparser = []
 pyparsing = []
 pytest = []
 python-dotenv = []

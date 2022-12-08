@@ -35,6 +35,7 @@ updater.dispatcher.add_handler(CommandHandler("patreon", patreon))
 updater.dispatcher.add_handler(CommandHandler("noise", noise))
 updater.dispatcher.add_handler(CommandHandler("cointree", cointree))
 updater.dispatcher.add_handler(CommandHandler("insta", instagram))
+updater.dispatcher.add_handler(CommandHandler("broadcast", broadcast_transaction))
 updater.dispatcher.add_handler(MessageHandler(Filters.text, unknown))
 updater.dispatcher.add_handler(MessageHandler(
     Filters.command, unknown))  # Filters out unknown commands
