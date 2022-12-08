@@ -43,7 +43,7 @@ def get_fiat_value(currencies: Optional[Union[List[str], str]] = None) -> Dict:
         if k.endswith("cap") or k.endswith("vol"):
             if currency.lower() not in unsupported_to_format:
                 price[k] = format_currency(v, currency.upper(), "¤ #,##0.00")
-    price = json.dumps(price, indent=2, ensure_ascii=False)
+    price = json.dumps(price, indent=1, ensure_ascii=False).replace("{\n", "").replace("}", "").replace(' "', '"')
     return price
 
 
