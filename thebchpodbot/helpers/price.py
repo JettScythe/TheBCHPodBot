@@ -1,5 +1,4 @@
 from pycoingecko import CoinGeckoAPI
-from typing import List, Optional, Union, Dict
 import json
 from babel.numbers import format_currency
 
@@ -25,7 +24,7 @@ unsupported_to_format = [
 ]
 
 
-def get_fiat_value(currencies: Optional[Union[List[str], str]] = None) -> Dict:
+def get_fiat_value(currencies: list[str] | str | None = None) -> str:
     if not currencies:
         currencies = "usd"
     price = cg.get_price(

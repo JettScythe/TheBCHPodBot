@@ -1,12 +1,7 @@
-from telegram.update import Update
-from telegram.ext.callbackcontext import CallbackContext
+from telegram.ext import CallbackContext
 from helpers.price import get_fiat_value, supported_currencies
-from telegram.parsemode import ParseMode
 import logging
 from bitcash.network import NetworkAPI
-
-
-
 
 # Enable logging
 logging.basicConfig(
@@ -15,14 +10,15 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
-def start(update: Update, context: CallbackContext):
+def start(update):
     user = update.message.from_user
     logger.info("message from %s: %s", user.username, update.message.text)
     update.message.reply_text(
         "Welcome to TheBCHPodBot! Please write\
-        /help to see the commands available.")
+        /bot_help to see the commands available.")
 
-def help(update: Update, context: CallbackContext):
+
+def bot_help(update):
     user = update.message.from_user
     logger.info("message from %s: %s", user.username, update.message.text)
     update.message.reply_text("""Available Commands :-
@@ -50,6 +46,7 @@ def help(update: Update, context: CallbackContext):
     /insta - Link to instagram
     """)
 
+
 """
 shit to add:
 /latestclip - Link to latest clip
@@ -61,158 +58,185 @@ shit to add:
 
 """
 
-def youtube_url(update: Update, context: CallbackContext):
+
+def youtube_url(update):
     user = update.message.from_user
     logger.info("message from %s: %s", user.username, update.message.text)
     update.message.reply_text("Youtube Link =>\
     https://www.youtube.com/@BitcoinCashPodcast")
 
-def faq_url(update: Update, context: CallbackContext):
+
+def faq_url(update):
     user = update.message.from_user
     logger.info("message from %s: %s", user.username, update.message.text)
     update.message.reply_text("FAQ Link =>\
         https://bitcoincashpodcast.com/faqs")
 
-def website(update: Update, context: CallbackContext):
+
+def website(update):
     user = update.message.from_user
     logger.info("message from %s: %s", user.username, update.message.text)
     update.message.reply_text("View the Website =>\
         https://bitcoincashpodcast.com")
 
-def music(update: Update, context: CallbackContext):
+
+def music(update):
     user = update.message.from_user
     logger.info("message from %s: %s", user.username, update.message.text)
     update.message.reply_text("Enjoy the Music =>\
         https://www.youtube.com/playlist?list=PLo1CFIKcwE6IflqM8eByDFSUs_POPjmxG")
 
-def twitch(update: Update, context: CallbackContext):
+
+def twitch(update):
     user = update.message.from_user
     logger.info("message from %s: %s", user.username, update.message.text)
     update.message.reply_text("Watch the Podcast LIVE! =>\
         https://www.twitch.tv/thebitcoincashpodcast")
 
-def twitter(update: Update, context: CallbackContext):
+
+def twitter(update):
     user = update.message.from_user
     logger.info("message from %s: %s", user.username, update.message.text)
     update.message.reply_text("Follow us on Twitter => \
         https://twitter.com/TheBCHPodcast")
 
-def cashrain(update: Update, context: CallbackContext):
+
+def cashrain(update):
     user = update.message.from_user
     logger.info("message from %s: %s", user.username, update.message.text)
     update.message.reply_text("Sign up for our CashRain Community =>\
         https://cashrain.com/BitcoinCashPodcast")
 
-def telegram(update: Update, context: CallbackContext):
+
+def telegram(update):
     user = update.message.from_user
     logger.info("message from %s: %s", user.username, update.message.text)
     update.message.reply_text("Join the Discussion! => \
         https://t.me/thebitcoincashpodcast_discussion")
 
-def pod_announce(update: Update, context: CallbackContext):
+
+def pod_announce(update):
     user = update.message.from_user
     logger.info("message from %s: %s", user.username, update.message.text)
     update.message.reply_text("Don't miss any announcements! =>\
         https://t.me/thebitcoincashpodcast")
 
-def latest_ep(update: Update, context: CallbackContext):
+
+def latest_ep(update):
     user = update.message.from_user
     logger.info("message from %s: %s", user.username, update.message.text)
     pass
 
-def most_watched(update: Update, context: CallbackContext):
+
+def most_watched(update):
     user = update.message.from_user
     logger.info("message from %s: %s", user.username, update.message.text)
     pass
 
-def stats(update: Update, context: CallbackContext):
+
+def stats(update):
     user = update.message.from_user
     logger.info("message from %s: %s", user.username, update.message.text)
     update.message.reply_text("Check out Podcast Stats here =>\
         https://bitcoincashpodcast.com/stats")
 
-def roadmap(update: Update, context: CallbackContext):
+
+def roadmap(update):
     user = update.message.from_user
     logger.info("message from %s: %s", user.username, update.message.text)
     update.message.reply_text("View the Roadmap here =>\
         https://bitcoincashpodcast.com/roadmap")
 
-def motw(update: Update, context: CallbackContext):
+
+def motw(update):
     user = update.message.from_user
     logger.info("message from %s: %s", user.username, update.message.text)
     pass
 
-def about(update: Update, context: CallbackContext):
+
+def about(update):
     user = update.message.from_user
     logger.info("message from %s: %s", user.username, update.message.text)
     update.message.reply_text("See what it's all about =>\
         https://bitcoincashpodcast.com/about")
 
-def episodes(update: Update, context: CallbackContext):
+
+def episodes(update):
     user = update.message.from_user
     logger.info("message from %s: %s", user.username, update.message.text)
     update.message.reply_text("View all episodes here =>\
         https://bitcoincashpodcast.com/docs/welcome")
 
-def code(update: Update, context: CallbackContext):
+
+def code(update):
     user = update.message.from_user
     logger.info("message from %s: %s", user.username, update.message.text)
     update.message.reply_text("View BCH-related code=>\
         https://bitcoincashpodcast.com/code")
 
-def recommended(update: Update, context: CallbackContext):
+
+def recommended(update):
     user = update.message.from_user
     logger.info("message from %s: %s", user.username, update.message.text)
     update.message.reply_text("Check out these recommended creators and resources=>\
         https://bitcoincashpodcast.com/recommended")
     pass
 
-def clips(update: Update, context: CallbackContext):
+
+def clips(update):
     user = update.message.from_user
     logger.info("message from %s: %s", user.username, update.message.text)
     update.message.reply_text("Check out Podcast Clips =>\
         https://www.youtube.com/@bchclips3643")
 
-def latest_clip(update: Update, context: CallbackContext):
+
+def latest_clip(update):
     user = update.message.from_user
     logger.info("message from %s: %s", user.username, update.message.text)
     pass
 
-def patreon(update: Update, context: CallbackContext):
+
+def patreon(update):
     user = update.message.from_user
     logger.info("message from %s: %s", user.username, update.message.text)
     update.message.reply_text("Become a Patron today! =>\
         https://www.patreon.com/bitcoincashpodcast")
 
-def noise(update: Update, context: CallbackContext):
+
+def noise(update):
     user = update.message.from_user
     logger.info("message from %s: %s", user.username, update.message.text)
     update.message.reply_text("Join in on the Noise =>\
         https://noise.cash/u/TheBitcoinCashPodcast")
 
-def cointree(update: Update, context: CallbackContext):
+
+def cointree(update):
     user = update.message.from_user
     logger.info("message from %s: %s", user.username, update.message.text)
     update.message.reply_text("View our Cointree =>\
         https://cointr.ee/bitcoincashpodcast")
 
-def instagram(update: Update, context: CallbackContext):
+
+def instagram(update):
     user = update.message.from_user
     logger.info("message from %s: %s", user.username, update.message.text)
     update.message.reply_text("Check our our sick pics =>\
         https://www.instagram.com/thebitcoincashpodcast/")
 
-def listen(update: Update, context: CallbackContext):
+
+def listen(update):
     user = update.message.from_user
     logger.info("message from %s: %s", user.username, update.message.text)
     pass
 
-def donate(update: Update, context: CallbackContext):
+
+def donate(update):
     user = update.message.from_user
     logger.info("message from %s: %s", user.username, update.message.text)
     pass
 
-def hotdog(update: Update, context: CallbackContext):
+
+def hotdog(update, context: CallbackContext):
     user = update.message.from_user
     logger.info("message from %s: %s", user.username, update.message.text)
     if len(context.args) >= 1:
@@ -228,30 +252,33 @@ def hotdog(update: Update, context: CallbackContext):
         price = get_fiat_value()
     if update.message is not None:
         if len(price) >= 4096:
-                if update.message.chat.type != "private":  # check if in DM
-                    return update.message.reply_html(
-                        text="Private message me to see price in all supported currencies",
-                    )
-                else:
-                    messages = [price[:len(price)//2], price[len(price)//2:]]
-                    for message in messages:
-                        update.message.reply_markdown("```\n{}\n```".format(message), quote=True)
+            if update.message.chat.type != "private":  # check if in DM
+                return update.message.reply_html(
+                    text="Private message me to see price in all supported currencies",
+                )
+            else:
+                messages = [price[:len(price) // 2], price[len(price) // 2:]]
+                for message in messages:
+                    update.message.reply_markdown("```\n{}\n```".format(message), quote=True)
         else:
             update.message.reply_markdown("```\n{}\n```".format(price), quote=True)
     else:
         pass
 
-def ratio(update: Update, context: CallbackContext):
+
+def ratio(update):
     user = update.message.from_user
     logger.info("message from %s: %s", user.username, update.message.text)
     response = "```\n{}\n```".format(get_fiat_value("btc"))
     update.message.reply_markdown(response, quote=True)
 
-def broadcast_transaction(update: Update, context: CallbackContext):
+
+def broadcast_transaction(update, context: CallbackContext):
     user = update.message.from_user
     logger.info("message from %s: %s", user.username, update.message.text)
     txid = NetworkAPI.broadcast_tx(context.args[0])
     if txid.status_code == 200:
         update.message.reply_text("Broadcast Success! Txid[s]: {}".format(txid.text), quote=True)
     else:
-        update.message.reply_text("Doesn't look like I could broadcast for you right now, confirm balances and try again", quote=True)
+        update.message.reply_text(
+            "Doesn't look like I could broadcast for you right now, confirm balances and try again", quote=True)
