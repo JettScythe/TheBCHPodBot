@@ -1,6 +1,7 @@
 from pycoingecko import CoinGeckoAPI
 import json
 from babel.numbers import format_currency
+import time
 
 cg = CoinGeckoAPI()
 supported_currencies = cg.get_supported_vs_currencies()
@@ -23,10 +24,14 @@ unsupported_to_format = [
     "xag",
 ]
 
+price_cache = {}
+
 
 def get_fiat_value(currencies: list[str] | str | None = None) -> str:
     if not currencies:
         currencies = "usd"
+    if currencies in price_cache and time.time() - price_cache[currencies]["timestamp"] <= 240:
+        return price_cache[currencies]["price"]
     price = cg.get_price(
         "bitcoin-cash",
         currencies,
@@ -43,6 +48,8 @@ def get_fiat_value(currencies: list[str] | str | None = None) -> str:
             if currency.lower() not in unsupported_to_format:
                 price[k] = format_currency(v, currency.upper(), "¤ #,##0.00")
     price = json.dumps(price, indent=1, ensure_ascii=False).replace("{\n", "").replace("}", "").replace(' "', '"')
+    # Save the price and timestamp in the cache
+    price_cache[currencies] = {"price": price, "timestamp": time.time()}
     return price
 
 
