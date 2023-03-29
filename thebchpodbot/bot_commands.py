@@ -1,4 +1,5 @@
-from telegram.ext import CallbackContext
+from telegram.ext import CallbackContext, ContextTypes
+from telegram import Update
 from helpers.price import get_fiat_value, supported_currencies
 import logging
 from bitcash.network import NetworkAPI
@@ -10,18 +11,17 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
-def start(update):
+async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user = update.message.from_user
     logger.info("message from %s: %s", user.username, update.message.text)
-    update.message.reply_text(
-        "Welcome to TheBCHPodBot! Please write\
-        /bot_help to see the commands available.")
+    await update.message.reply_text(
+        "Welcome to TheBCHPodBot! Please write /help to see the commands available.")
 
 
-def bot_help(update):
+async def bot_help(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user = update.message.from_user
     logger.info("message from %s: %s", user.username, update.message.text)
-    update.message.reply_text("""Available Commands :-
+    await update.message.reply_text("""Available Commands =>
     /youtube - To get the youtube URL
     /faq - Link to FAQ
     /website - Link to website
@@ -59,184 +59,183 @@ shit to add:
 """
 
 
-def youtube_url(update):
+async def youtube_url(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user = update.message.from_user
     logger.info("message from %s: %s", user.username, update.message.text)
-    update.message.reply_text("Youtube Link =>\
+    await update.message.reply_text("Youtube Link =>\
     https://www.youtube.com/@BitcoinCashPodcast")
 
 
-def faq_url(update):
+async def faq_url(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user = update.message.from_user
     logger.info("message from %s: %s", user.username, update.message.text)
-    update.message.reply_text("FAQ Link =>\
+    await update.message.reply_text("FAQ Link =>\
         https://bitcoincashpodcast.com/faqs")
 
 
-def website(update):
+async def website(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user = update.message.from_user
     logger.info("message from %s: %s", user.username, update.message.text)
-    update.message.reply_text("View the Website =>\
+    await update.message.reply_text("View the Website =>\
         https://bitcoincashpodcast.com")
 
 
-def music(update):
+async def music(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user = update.message.from_user
     logger.info("message from %s: %s", user.username, update.message.text)
-    update.message.reply_text("Enjoy the Music =>\
+    await update.message.reply_text("Enjoy the Music =>\
         https://www.youtube.com/playlist?list=PLo1CFIKcwE6IflqM8eByDFSUs_POPjmxG")
 
 
-def twitch(update):
+async def twitch(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user = update.message.from_user
     logger.info("message from %s: %s", user.username, update.message.text)
-    update.message.reply_text("Watch the Podcast LIVE! =>\
+    await update.message.reply_text("Watch the Podcast LIVE! =>\
         https://www.twitch.tv/thebitcoincashpodcast")
 
 
-def twitter(update):
+async def twitter(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user = update.message.from_user
     logger.info("message from %s: %s", user.username, update.message.text)
-    update.message.reply_text("Follow us on Twitter => \
+    await update.message.reply_text("Follow us on Twitter => \
         https://twitter.com/TheBCHPodcast")
 
 
-def cashrain(update):
+async def cashrain(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user = update.message.from_user
     logger.info("message from %s: %s", user.username, update.message.text)
-    update.message.reply_text("Sign up for our CashRain Community =>\
+    await update.message.reply_text("Sign up for our CashRain Community =>\
         https://cashrain.com/BitcoinCashPodcast")
 
 
-def telegram(update):
+async def telegram(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user = update.message.from_user
     logger.info("message from %s: %s", user.username, update.message.text)
-    update.message.reply_text("Join the Discussion! => \
+    await update.message.reply_text("Join the Discussion! => \
         https://t.me/thebitcoincashpodcast_discussion")
 
 
-def pod_announce(update):
+async def pod_announce(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user = update.message.from_user
     logger.info("message from %s: %s", user.username, update.message.text)
-    update.message.reply_text("Don't miss any announcements! =>\
+    await update.message.reply_text("Don't miss any announcements! =>\
         https://t.me/thebitcoincashpodcast")
 
 
-def latest_ep(update):
+async def latest_ep(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user = update.message.from_user
     logger.info("message from %s: %s", user.username, update.message.text)
     pass
 
 
-def most_watched(update):
+async def most_watched(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user = update.message.from_user
     logger.info("message from %s: %s", user.username, update.message.text)
     pass
 
 
-def stats(update):
+async def stats(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user = update.message.from_user
     logger.info("message from %s: %s", user.username, update.message.text)
-    update.message.reply_text("Check out Podcast Stats here =>\
+    await update.message.reply_text("Check out Podcast Stats here =>\
         https://bitcoincashpodcast.com/stats")
 
 
-def roadmap(update):
+async def roadmap(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user = update.message.from_user
     logger.info("message from %s: %s", user.username, update.message.text)
-    update.message.reply_text("View the Roadmap here =>\
+    await update.message.reply_text("View the Roadmap here =>\
         https://bitcoincashpodcast.com/roadmap")
 
 
-def motw(update):
+async def motw(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user = update.message.from_user
     logger.info("message from %s: %s", user.username, update.message.text)
     pass
 
 
-def about(update):
+async def about(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user = update.message.from_user
     logger.info("message from %s: %s", user.username, update.message.text)
-    update.message.reply_text("See what it's all about =>\
+    await update.message.reply_text("See what it's all about =>\
         https://bitcoincashpodcast.com/about")
 
 
-def episodes(update):
+async def episodes(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user = update.message.from_user
     logger.info("message from %s: %s", user.username, update.message.text)
-    update.message.reply_text("View all episodes here =>\
+    await update.message.reply_text("View all episodes here =>\
         https://bitcoincashpodcast.com/docs/welcome")
 
 
-def code(update):
+async def code(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user = update.message.from_user
     logger.info("message from %s: %s", user.username, update.message.text)
-    update.message.reply_text("View BCH-related code=>\
+    await update.message.reply_text("View BCH-related code=>\
         https://bitcoincashpodcast.com/code")
 
 
-def recommended(update):
+async def recommended(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user = update.message.from_user
     logger.info("message from %s: %s", user.username, update.message.text)
-    update.message.reply_text("Check out these recommended creators and resources=>\
+    await update.message.reply_text("Check out these recommended creators and resources=>\
         https://bitcoincashpodcast.com/recommended")
-    pass
 
 
-def clips(update):
+async def clips(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user = update.message.from_user
     logger.info("message from %s: %s", user.username, update.message.text)
-    update.message.reply_text("Check out Podcast Clips =>\
+    await update.message.reply_text("Check out Podcast Clips =>\
         https://www.youtube.com/@bchclips3643")
 
 
-def latest_clip(update):
+async def latest_clip(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user = update.message.from_user
     logger.info("message from %s: %s", user.username, update.message.text)
     pass
 
 
-def patreon(update):
+async def patreon(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user = update.message.from_user
     logger.info("message from %s: %s", user.username, update.message.text)
-    update.message.reply_text("Become a Patron today! =>\
+    await update.message.reply_text("Become a Patron today! =>\
         https://www.patreon.com/bitcoincashpodcast")
 
 
-def noise(update):
+async def noise(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user = update.message.from_user
     logger.info("message from %s: %s", user.username, update.message.text)
-    update.message.reply_text("Join in on the Noise =>\
+    await update.message.reply_text("Join in on the Noise =>\
         https://noise.cash/u/TheBitcoinCashPodcast")
 
 
-def cointree(update):
+async def cointree(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user = update.message.from_user
     logger.info("message from %s: %s", user.username, update.message.text)
-    update.message.reply_text("View our Cointree =>\
+    await update.message.reply_text("View our Cointree =>\
         https://cointr.ee/bitcoincashpodcast")
 
 
-def instagram(update):
+async def instagram(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user = update.message.from_user
     logger.info("message from %s: %s", user.username, update.message.text)
-    update.message.reply_text("Check our our sick pics =>\
+    await update.message.reply_text("Check our our sick pics =>\
         https://www.instagram.com/thebitcoincashpodcast/")
 
 
-def listen(update):
+async def listen(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user = update.message.from_user
     logger.info("message from %s: %s", user.username, update.message.text)
     pass
 
 
-def donate(update):
+async def donate(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user = update.message.from_user
     logger.info("message from %s: %s", user.username, update.message.text)
     pass
 
 
-def hotdog(update, context: CallbackContext):
+async def hotdog(update, context: CallbackContext):
     user = update.message.from_user
     logger.info("message from %s: %s", user.username, update.message.text)
     if len(context.args) >= 1:
@@ -253,32 +252,32 @@ def hotdog(update, context: CallbackContext):
     if update.message is not None:
         if len(price) >= 4096:
             if update.message.chat.type != "private":  # check if in DM
-                return update.message.reply_html(
+                return await update.message.reply_html(
                     text="Private message me to see price in all supported currencies",
                 )
             else:
                 messages = [price[:len(price) // 2], price[len(price) // 2:]]
                 for message in messages:
-                    update.message.reply_markdown("```\n{}\n```".format(message), quote=True)
+                    await update.message.reply_markdown("```\n{}\n```".format(message), quote=True)
         else:
-            update.message.reply_markdown("```\n{}\n```".format(price), quote=True)
+            await update.message.reply_markdown("```\n{}\n```".format(price), quote=True)
     else:
         pass
 
 
-def ratio(update):
+async def ratio(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user = update.message.from_user
     logger.info("message from %s: %s", user.username, update.message.text)
     response = "```\n{}\n```".format(get_fiat_value("btc"))
-    update.message.reply_markdown(response, quote=True)
+    await update.message.reply_markdown(response, quote=True)
 
 
-def broadcast_transaction(update, context: CallbackContext):
+async def broadcast_transaction(update, context: CallbackContext):
     user = update.message.from_user
     logger.info("message from %s: %s", user.username, update.message.text)
     txid = NetworkAPI.broadcast_tx(context.args[0])
     if txid.status_code == 200:
-        update.message.reply_text("Broadcast Success! Txid[s]: {}".format(txid.text), quote=True)
+        await update.message.reply_text("Broadcast Success! Txid[s]: {}".format(txid.text), quote=True)
     else:
-        update.message.reply_text(
+        await update.message.reply_text(
             "Doesn't look like I could broadcast for you right now, confirm balances and try again", quote=True)
