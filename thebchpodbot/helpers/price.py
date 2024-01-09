@@ -27,30 +27,34 @@ unsupported_to_format = [
 price_cache = {}
 
 
-def get_fiat_value(currencies: list[str] | str | None = None) -> str:
-    if not currencies:
-        currencies = "usd"
-    if currencies in price_cache and time.time() - price_cache[currencies]["timestamp"] <= 240:
-        return price_cache[currencies]["price"]
+def refresh_price_cache():
     price = cg.get_price(
         "bitcoin-cash",
-        currencies,
+        supported_currencies,
         include_market_cap=True,
         include_24hr_vol=True,
         include_24hr_change=True,
-    )
-    price = price["bitcoin-cash"]
+    )["bitcoin-cash"]
     for k, v in price.items():
         currency = k.split("_")[0]
+        if currency not in price_cache:
+            price_cache[currency] = {"price": {}, "timestamp": time.time()}
         if k.endswith("change"):
-            price[k] = format_percent(v)
-        if k.endswith("cap") or k.endswith("vol"):
+            price_cache[currency]["price"][k] = format_percent(v)
+        elif k.endswith(("cap", "vol")):
             if currency.lower() not in unsupported_to_format:
-                price[k] = format_currency(v, currency.upper(), "¤ #,##0.00")
-    price = json.dumps(price, indent=1, ensure_ascii=False).replace("{\n", "").replace("}", "").replace(' "', '"')
-    # Save the price and timestamp in the cache
-    price_cache[currencies] = {"price": price, "timestamp": time.time()}
-    return price
+                price_cache[currency]["price"][k] = format_currency(v, currency.upper(), "¤ #,##0.00")
+        else:
+            price_cache[currency]["price"][k] = v
+
+
+def get_fiat_value(currencies: list[str] = supported_currencies) -> str:
+    if "usd" not in price_cache or time.time() - price_cache["usd"]["timestamp"] <= 240:
+        refresh_price_cache()
+    to_ret = ""
+    for currency in currencies:
+        to_ret += json.dumps(price_cache[currency]["price"], indent=1, ensure_ascii=False).replace("{\n", "").replace("}", "").replace(' "', '"')
+    return to_ret
 
 
 def format_percent(value) -> str:

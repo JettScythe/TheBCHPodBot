@@ -240,7 +240,7 @@ async def hotdog(update, context: CallbackContext):
     logger.info("message from %s: %s", user.username, update.message.text)
     if len(context.args) >= 1:
         if context.args[0] == "all":
-            price = get_fiat_value(supported_currencies)
+            price = get_fiat_value()
         else:
             currencies = []
             for arg in context.args:
@@ -248,7 +248,7 @@ async def hotdog(update, context: CallbackContext):
                     currencies.append(arg.lower())
             price = get_fiat_value(currencies)
     else:
-        price = get_fiat_value()
+        price = get_fiat_value(["usd"])
     if update.message is not None:
         if len(price) >= 4096:
             if update.message.chat.type != "private":  # check if in DM
@@ -268,7 +268,7 @@ async def hotdog(update, context: CallbackContext):
 async def ratio(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user = update.message.from_user
     logger.info("message from %s: %s", user.username, update.message.text)
-    response = "```\n{}\n```".format(get_fiat_value("btc"))
+    response = "```\n{}\n```".format(get_fiat_value(["btc"]))
     await update.message.reply_markdown(response, quote=True)
 
 
