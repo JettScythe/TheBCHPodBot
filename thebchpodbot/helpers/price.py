@@ -41,9 +41,8 @@ def refresh_price_cache():
             price_cache[currency] = {"price": {}, "timestamp": time.time()}
         if k.endswith("change"):
             price_cache[currency]["price"][k] = format_percent(v)
-        elif k.endswith(("cap", "vol")):
-            if currency.lower() not in unsupported_to_format:
-                price_cache[currency]["price"][k] = format_currency(v, currency.upper(), "¤ #,##0.00")
+        elif k.endswith(("cap", "vol")) and currency.lower() not in unsupported_to_format:
+            price_cache[currency]["price"][k] = format_currency(v, currency.upper(), "¤ #,##0.00")
         else:
             price_cache[currency]["price"][k] = v
 
