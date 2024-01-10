@@ -39,6 +39,8 @@ def refresh_price_cache():
         currency = k.split("_")[0]
         if currency not in price_cache:
             price_cache[currency] = {"price": {}, "timestamp": time.time()}
+        else:
+            price_cache[currency]["timestamp"] = time.time()
         if k.endswith("change"):
             price_cache[currency]["price"][k] = format_percent(v)
         elif k.endswith(("cap", "vol")) and currency.lower() not in unsupported_to_format:
@@ -48,7 +50,7 @@ def refresh_price_cache():
 
 
 def get_fiat_value(currencies: list[str] = supported_currencies) -> str:
-    if "usd" not in price_cache or time.time() - price_cache["usd"]["timestamp"] <= 240:
+    if "usd" not in price_cache or time.time() - price_cache["usd"]["timestamp"] >= 240:
         refresh_price_cache()
     to_ret = ""
     for currency in currencies:
