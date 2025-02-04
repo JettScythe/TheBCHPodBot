@@ -29,7 +29,7 @@ async def bot_help(update: Update, context: ContextTypes.DEFAULT_TYPE):
     /twitch - Watch the show live!
     /hotdog - Price of BCH
     /ratio - Ratio of BCH/BTC
-    /twitter - Link to Twitter
+    /x - Link to X
     /cashrain - Link to cashrain community
     /telegram - Link to TheBCHPodcast Discussion telegram
     /announcements - Link to TheBCHPodcast Announcements channel
@@ -94,11 +94,11 @@ async def twitch(update: Update, context: ContextTypes.DEFAULT_TYPE):
         https://www.twitch.tv/thebitcoincashpodcast")
 
 
-async def twitter(update: Update, context: ContextTypes.DEFAULT_TYPE):
+async def x(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user = update.message.from_user
     logger.info("message from %s: %s", user.username, update.message.text)
-    await update.message.reply_text("Follow us on Twitter => \
-        https://twitter.com/TheBCHPodcast")
+    await update.message.reply_text("Follow us on X => \
+        https://x.com/TheBCHPodcast")
 
 
 async def cashrain(update: Update, context: ContextTypes.DEFAULT_TYPE):
